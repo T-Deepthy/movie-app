@@ -7,7 +7,7 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://www.omdbapi.com/?apikey=aeb68ae5&page=1&type=movie&Content-Type=application/json'
+axios.defaults.baseURL = 'https://www.omdbapi.com/?apikey=aeb68ae5&page=1&type=movie&Content-Type=application/json'
 new Vue({
   render: h => h(App),
   // store,
