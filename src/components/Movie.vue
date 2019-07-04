@@ -81,8 +81,9 @@
     </v-layout>
   </v-container>
 </template>
+
 <script>
-import axios from 'axios'
+import movieApi from '@/services/MovieApi'
 export default {
   props: ['id'],
   data () {
@@ -94,17 +95,14 @@ export default {
     }
   },
   mounted () {
-    const url = 'http://www.omdbapi.com/?apikey=aeb68ae5&Content-Type=application/json' + '&i=' + this.id
-    axios
-      .get(url)
+    movieApi.fetchSingleMovie(this.id)
       .then(response => {
-        this.singleMovie = response.data
+        this.singleMovie = response
         this.ratings = this.singleMovie.Ratings
         this.loading = false
       })
       .catch(error => {
-        // eslint-disable-next-line
-         console.log(error)
+        console.log(error)
       })
   },
   methods: {

@@ -1,6 +1,5 @@
 <template>
-
-<v-container v-if="loading">
+  <v-container v-if="loading">
     <div class="text-xs-center">
       <v-progress-circular
         indeterminate
@@ -10,8 +9,7 @@
       </v-progress-circular>
     </div>
   </v-container>
-
-<v-container v-else grid-list-xl>
+  <v-container v-else grid-list-xl>
     <v-layout wrap>
       <v-flex xs4
         v-for="(item, index) in wholeResponse"
@@ -22,8 +20,7 @@
             :src="item.Poster"
             aspect-ratio="1"
           ></v-img>
-
-<v-card-title primary-title>
+          <v-card-title primary-title>
             <div>
               <h2>{{item.Title}}</h2>
               <div>Year: {{item.Year}}</div>
@@ -31,15 +28,14 @@
               <div>IMDB-id: {{item.imdbID}}</div>
             </div>
           </v-card-title>
-
-<v-card-actions class="justify-center">
-            <v-btn flat
+          <v-card-actions>
+            <v-btn round
               color="green"
               @click="singleMovie(item.imdbID)"
               >View</v-btn>
+            <v-btn round color="green">Visit site</v-btn>
           </v-card-actions>
-
-</v-card>
+        </v-card>
       </v-flex>
   </v-layout>
   </v-container>
@@ -47,6 +43,7 @@
 
 <script>
 import axios from 'axios'
+import movieApi from '@/services/MovieApi'
 export default {
   data () {
     return {
@@ -55,15 +52,14 @@ export default {
     }
   },
   mounted () {
-  axios
-    .get('http://www.omdbapi.com/?s=indiana&apikey=aeb68ae5&page=1&type=movie&Content-Type=application/json')
-    .then(response => {
-      this.wholeResponse = response.data.Search
-      this.loading = false
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    movieApi.fetchMovieCollection('indiana')
+      .then(response => {
+        this.wholeResponse = response.Search
+        this.loading = false
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     singleMovie (id) {
@@ -72,7 +68,6 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" scoped>
   .v-progress-circular
     margin: 1rem

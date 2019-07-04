@@ -1,4 +1,3 @@
-
 <template>
   <v-container v-if="loading">
     <div class="text-xs-center">
@@ -10,13 +9,11 @@
       </v-progress-circular>
     </div>
   </v-container>
-
   <v-container v-else-if="noData">
     <div class="text-xs-center">
     <h2>No Movie in API with {{this.name}}</h2>
     </div>
   </v-container>
-
   <v-container v-else grid-list-xl>
     <v-layout wrap>
       <v-flex xs4
@@ -48,8 +45,10 @@
   </v-layout>
   </v-container>
 </template>
+
 <script>
-import axios from 'axios'
+
+import movieApi from '@/services/MovieApi'
 export default {
   props: ['name'],
   data () {
@@ -64,14 +63,12 @@ export default {
       this.$router.push('/movie/' + id)
     },
     fetchResult (value) {
-      const url = 'http://www.omdbapi.com/?apikey=aeb68ae5&Content-Type=application/json' + '&s=' + value
-      axios
-        .get(url)
+     
+      movieApi.fetchMovieCollection(value)
         .then(response => {
-          this.movieResponse = response.data.Search
-          this.loading = false
-          if (response.data.Response === 'True') {
-            this.movieResponse = response.data.Search
+          
+          if (response.Response === 'True') {
+            this.movieResponse = response.Search
             this.loading = false
             this.noData = false
           } else {
@@ -80,7 +77,7 @@ export default {
           }
         })
         .catch(error => {
-         // eslint-disable-next-line
+          // eslint-disable-next-line
           console.log(error)
         })
     }
