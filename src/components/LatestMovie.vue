@@ -33,7 +33,6 @@
               color="green"
               @click="singleMovie(item.imdbID)"
               >View</v-btn>
-            <v-btn round color="green">Visit site</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
