@@ -1,3 +1,4 @@
+
 <template>
   <v-container v-if="loading">
     <div class="text-xs-center">
@@ -7,6 +8,12 @@
         :width="8"
         color="green">
       </v-progress-circular>
+    </div>
+  </v-container>
+
+  <v-container v-else-if="noData">
+    <div class="text-xs-center">
+    <h2>No Movie in API with {{this.name}}</h2>
     </div>
   </v-container>
 
@@ -48,20 +55,9 @@ export default {
   data () {
     return {
       movieResponse: [],
-      loading: true
+      loading: true,
+      noData: false
     }
-  },
-  mounted () {
-    const url = 'http://www.omdbapi.com/?apikey=b76b385c&Content-Type=application/json' + '&s=' + this.name
-    axios
-      .get(url)
-      .then(response => {
-        this.movieResponse = response.data.Search
-        this.loading = false
-      })
-      .catch(error => {
-        console.log(error)
-      })
   },
   methods: {
     singleMovie (id) {
@@ -74,8 +70,17 @@ export default {
         .then(response => {
           this.movieResponse = response.data.Search
           this.loading = false
+          if (response.data.Response === 'True') {
+            this.movieResponse = response.data.Search
+            this.loading = false
+            this.noData = false
+          } else {
+            this.noData = true
+            this.loading = false
+          }
         })
         .catch(error => {
+         // eslint-disable-next-line
           console.log(error)
         })
     }

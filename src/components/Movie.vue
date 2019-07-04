@@ -102,9 +102,10 @@ export default {
         this.ratings = this.singleMovie.Ratings
         this.loading = false
       })
-      // .catch(error => {
-      //    console.log(error)
-      // })
+      .catch(error => {
+        // eslint-disable-next-line
+         console.log(error)
+      })
   },
   methods: {
     back () {
