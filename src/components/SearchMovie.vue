@@ -1,5 +1,4 @@
 <template>
-
   <v-container v-if="loading">
     <div class="text-xs-center">
       <v-progress-circular
@@ -22,7 +21,6 @@
             :src="item.Poster"
             aspect-ratio="1"
           ></v-img>
-
           <v-card-title primary-title>
             <div>
               <h2>{{item.Title}}</h2>
@@ -31,7 +29,6 @@
               <div>IMDB-id: {{item.imdbID}}</div>
             </div>
           </v-card-title>
-
           <v-card-actions>
             <v-btn round
               color="green"
@@ -39,13 +36,11 @@
               >View</v-btn>
             <v-btn round color="green">Visit site</v-btn>
           </v-card-actions>
-
         </v-card>
       </v-flex>
   </v-layout>
   </v-container>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -57,7 +52,7 @@ export default {
     }
   },
   mounted () {
-    const url = 'http://www.omdbapi.com/?apikey=aeb68ae5&Content-Type=application/json' + '&s=' + this.name
+    const url = 'http://www.omdbapi.com/?apikey=b76b385c&Content-Type=application/json' + '&s=' + this.name
     axios
       .get(url)
       .then(response => {
@@ -71,11 +66,30 @@ export default {
   methods: {
     singleMovie (id) {
       this.$router.push('/movie/' + id)
+    },
+    fetchResult (value) {
+      const url = 'http://www.omdbapi.com/?apikey=aeb68ae5&Content-Type=application/json' + '&s=' + value
+      axios
+        .get(url)
+        .then(response => {
+          this.movieResponse = response.data.Search
+          this.loading = false
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
+  mounted () {
+    this.fetchResult(this.name)
+  },
+  watch: {
+    name (value) {
+      this.fetchResult(value)
     }
   }
 }
 </script>
-
 <style lang="stylus" scoped>
   .v-progress-circular
     margin: 1rem

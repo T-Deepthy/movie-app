@@ -94,18 +94,17 @@ export default {
     }
   },
   mounted () {
-    const url = 'http://www.omdbapi.com/?apikey=b76b385c&Content-Type=application/json' + '&i=' + this.id
+    const url = 'http://www.omdbapi.com/?apikey=aeb68ae5&Content-Type=application/json' + '&i=' + this.id
     axios
       .get(url)
       .then(response => {
         this.singleMovie = response.data
         this.ratings = this.singleMovie.Ratings
-        debugger
         this.loading = false
       })
-      .catch(error => {
-        console.log(error)
-      })
+      // .catch(error => {
+      //    console.log(error)
+      // })
   },
   methods: {
     back () {
