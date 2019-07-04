@@ -19,12 +19,10 @@
         </v-flex>
       <v-btn
         flat
-        href="#"
         :disabled="!dataAvailable"
         @click="searchMovie"
       >
         <span class="mr-2">Search</span>
-       <span class="mr-2">Search</span>
       </v-btn>
     </v-toolbar>
 
@@ -40,7 +38,6 @@ export default {
   },
   data () {
     return {
-      //
       searchString: ''
     }
   },
